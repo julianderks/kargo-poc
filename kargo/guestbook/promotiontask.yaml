@@ -11,6 +11,8 @@ spec:
       value: main
     - name: image
       value: europe-west4-docker.pkg.dev/shared-9456/sng/guestbook
+    - name: app
+      value: guestbook
   steps:
     # Clone the Git repository that contains the Kustomize configuration
     # to the ./src directory, and the environment configuration to ./out.
