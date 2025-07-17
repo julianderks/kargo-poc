@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  ENV: development
+  LOG_LEVEL: debug
+kind: ConfigMap
+metadata:
+  name: app-config-fb8c5ftd62
+  namespace: guestbook-staging
