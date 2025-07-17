@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  ENV: prd
+  LOG_LEVEL: debug
+  hoi: doei2
+kind: ConfigMap
+metadata:
+  name: app-config-ttcckchkht
+  namespace: guestbook-prd
