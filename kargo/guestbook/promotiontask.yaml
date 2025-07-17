@@ -33,15 +33,15 @@ spec:
     - uses: git-clear
       config:
         path: ./out
-    # Update the image in the Kustomize configuration located at ./src/env/<stage>
-    # in the repository.
-    - uses: kustomize-set-image
-      as: update-image
-      config:
-        path: ./src/kustomize/${{ vars.app }}/overlays/${{ ctx.stage }}
-        images:
-          - image: ${{ vars.image }}
-            tag: ${{ imageFrom(vars.image).Tag}}
+    # # Update the image in the Kustomize configuration located at ./src/env/<stage>
+    # # in the repository.
+    # - uses: kustomize-set-image
+    #   as: update-image
+    #   config:
+    #     path: ./src/kustomize/${{ vars.app }}/overlays/${{ ctx.stage }}
+    #     images:
+    #       - image: ${{ vars.image }}
+    #         tag: ${{ imageFrom(vars.image).Tag}}
     # Build the Kustomize configuration in the ./src directory using the env/<stage>
     # overlay to the ./out directory.
     - uses: kustomize-build
