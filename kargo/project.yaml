@@ -5,3 +5,23 @@ metadata:
   annotations:
     # This annotation ensures Projects (Namespaces) are created first when deployed via Argo CD
     argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: ProjectConfig
+metadata:
+  name: kargo-promotion
+  namespace: kargo-promotion
+spec:
+  promotionPolicies:
+    - stageSelector:
+        # Apply to all stages matching a regex pattern
+        name: "glob:dev"
+      autoPromotionEnabled: true
+    - stageSelector:
+        # Apply to all stages matching a glob pattern
+        name: "glob:staging"
+      autoPromotionEnabled: false
+    - stageSelector:
+        # Apply to all stages matching a glob pattern
+        name: "glob:prod"
+      autoPromotionEnabled: false
