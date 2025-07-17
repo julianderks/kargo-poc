@@ -2,7 +2,8 @@ apiVersion: v1
 data:
   ENV: development
   LOG_LEVEL: debug
+  hoi: doei
 kind: ConfigMap
 metadata:
-  name: app-config-fb8c5ftd62
+  name: app-config-m25hfck88t
   namespace: guestbook-dev
