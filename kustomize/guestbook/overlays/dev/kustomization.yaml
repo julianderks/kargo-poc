@@ -11,5 +11,5 @@ configMapGenerator:
     literals:
       - ENV=development
       - LOG_LEVEL=debug
-      - hoi=doei
+      - hoi=doei2
     behavior: create
