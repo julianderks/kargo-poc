@@ -14,7 +14,7 @@ spec:
     metadata:
       name: guestbook-{{path.basename}}
       annotations:
-        kargo.akuity.io/authorized-stage: kargo-advanced:{{path.basename}}
+        kargo.akuity.io/authorized-stage: kargo-promotion:{{path.basename}}
     spec:
       project: default
       destination:

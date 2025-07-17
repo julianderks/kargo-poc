@@ -54,16 +54,44 @@ spec:
       config:
         path: ./out
         message: ${{ task.outputs['update-image'].commitMessage }}
+
     # Push the changes to the Git repository.
     - uses: git-push
+      if: ${{ vars.openpr != 'true' }}
       config:
         path: ./out
+    # Push the changes to a newly created branch in the Git repository.
+    - uses: git-push
+      if: ${{ vars.openpr == 'true' }}
+      as: push
+      config:
+        path: ./out
+        generateTargetBranch: true
+
+    # Open a pull request to merge the changes into the main branch.
+    - uses: git-open-pr
+      as: open-pr
+      if: ${{ vars.openpr == 'true' }}
+      config:
+        repoURL: ${{ vars.repoURL }}
+        # createTargetBranch: true
+        sourceBranch: ${{ task.outputs.push.branch }}
+        targetBranch: env/${{ ctx.stage }}
+
+    # Wait for the pull request to be merged.
+    - uses: git-wait-for-pr
+      as: wait-for-pr
+      if: ${{ vars.openpr == 'true' }}
+      config:
+        repoURL: ${{ vars.repoURL }}
+        prNumber: ${{ task.outputs['open-pr'].prNumber }}
+
     # Request a sync of the ArgoCD Application to apply the changes from the
     # commit.
-    # - uses: argocd-update
-    #   config:
-    #     apps:
-    #       - name: guestbook-${{ ctx.stage }}
-    #         sources:
-    #           - repoURL: ${{ vars.repoURL }}
-    #             desiredRevision: ${{ task.outputs['commit'].commit }}
+    - uses: argocd-update
+      config:
+        apps:
+          - name: guestbook-${{ ctx.stage }}
+            sources:
+              - repoURL: ${{ vars.repoURL }}
+                desiredRevision: ${{ task.outputs['commit'].commit }}
